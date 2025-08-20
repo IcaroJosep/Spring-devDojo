@@ -4,14 +4,31 @@
   <artifactId>04-CriacaoManual</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>04-Criacaomanual</name>
-  
-  <parent>
+  	<!-- Resumindo
+				O <parent> garante que você está usando a versão 3.5.4 do Spring Boot e herda toda a configuração base.
+				O <dependency> spring-boot-starter-web dá suporte a API REST e servidor web embutido.-->
+  	
+  	
+  <parent><!--diz que o seu projeto herda configurações do Spring Boot Starter Parent.-->
+  	
+  	<!--Define versões padrão de várias dependências (sem você precisar colocar <version> nelas).
+ 	 Configurações padrão do Maven (encoding UTF-8, plugins, etc).
+	Facilita upgrades do Spring Boot..-->
   	<artifactId>spring-boot-starter-parent</artifactId>
-  	<groupId>org.springframework.boot</groupId>
+  	<groupId>org.springframework.boot</groupId>				
   	<version>3.5.4</version>
   </parent>
   
-  <dependencies>
+  
+  <dependencies><!--lista de dependências que seu projeto precisa. Aqui você tem apenas uma dependência: -->
+  	
+  	<!--spring-boot-starter-web: starter que inclui tudo necessário para criar aplicações web e REST.
+	Internamente traz:
+		Spring MVC (para controllers, @RestController, etc).
+		Jackson (para converter objetos Java ↔ JSON).
+		Tomcat embutido (servidor web que roda na porta 8080).
+		Validação (Hibernate Validator).
+	Assim você já consegue rodar um backend REST sem configurar nada além.-->
   	<dependency>
   			<groupId>org.springframework.boot</groupId>
   			<artifactId>spring-boot-starter-web</artifactId>

@@ -10,9 +10,6 @@ import academy.devdojo.springboot.util.DateUtil;
 @EnableAutoConfiguration
 @ComponentScan
 public class AplicationStart {
-
-	@Autowired
-		public DateUtil dateUtil;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(AplicationStart.class,args);

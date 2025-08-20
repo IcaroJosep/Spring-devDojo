@@ -17,13 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class AnimeComtroller {
 	
-	@Autowired
+//	@Autowired : é indicado ussar o costrutor  ou o lombok para inicializaçao da variavel
 	private DateUtil dateUtil;
+	public AnimeComtroller(DateUtil dateUtil) {
+		this.dateUtil=dateUtil;
+	}
 	
 	@GetMapping(path="list")
 	public List<Anime> list(){
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
-		return List.of(new Anime("DGB"),new Anime("Bersek"));
+		return List.of(new Anime("DGB"),new Anime("Bersek"),new Anime("black clover"));
 	}
 
 }
