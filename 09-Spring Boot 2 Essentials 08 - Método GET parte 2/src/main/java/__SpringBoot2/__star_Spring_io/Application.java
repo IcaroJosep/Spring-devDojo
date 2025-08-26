@@ -11,3 +11,7 @@ public class Application {
 	}
 
 }
+/*na aula foi implementado get's finbyid
+ * 
+ * e uma auteraçao no resources no arquivo .properties sobre a exibçao do trace na resposta http
+ */
