@@ -11,6 +11,14 @@ public class Application {
 	}
 
 }
-/*introduçao a post :
- * incerido na classe anime comtroler ... 
+/*jpa:
+ * ouve a adiçao de dependencia no mevem 
+ * 		DEPENDENCIAS :
+ * 			MYSLQ
+ * 			JPA
+ * 	#ATEMÇAO:
+ * Sobre a introduçao de uma coneçao com o mysql no arquivo resurces/ .propirties,
+ * tbm a la a incerçao direta de senha e logim (embora seja usavel em progetos de estudo nao e ussual, 
+ * nem em produçao nem em en deployt para o git), em produçao deve se ussar variaveis de aombiente em 
+ * vez da incerçao direata"
  * */
