@@ -12,7 +12,7 @@ public class Application {
 
 }
 /*jpa:
- * ouve a adiçao de dependencia no mevem , aistauaçao de uma coneçao e atribuiçao de uma entidade
+ * ouve a adiçao de dependencia no mevem 
  * 		DEPENDENCIAS :
  * 			MYSLQ
  * 			JPA
@@ -21,8 +21,4 @@ public class Application {
  * tbm a la a incerçao direta de senha e logim (embora seja usavel em progetos de estudo nao e ussual, 
  * nem em produçao nem em en deployt para o git), em produçao deve se ussar variaveis de aombiente em 
  * vez da incerçao direata"
- * 
- * istauraçao de uma entidade:
- * 		ororeu sobre a clase anime comtidade em dominio 
- * 		esta istauraçao faz com q a alase se torne uma tabela no banco de dados
  * */
