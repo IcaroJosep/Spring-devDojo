@@ -12,7 +12,7 @@ public class Application {
 
 }
 /*jpa:
- * ouve a adiçao de dependencia no mevem , aistauaçao de uma coneçao e atribuiçao de uma entidade
+ * ouve a adiçao de dependencia no mevem , a instauaçao de uma coneçao e atribuiçao de uma entidade
  * 		DEPENDENCIAS :
  * 			MYSLQ
  * 			JPA

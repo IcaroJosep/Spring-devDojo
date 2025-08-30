@@ -3,6 +3,8 @@ package __SpringBoot2.__star_Spring_io.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
+import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
+import __SpringBoot2.__star_Spring_io.requests.AnimePutRequestBody;
 import __SpringBoot2.__star_Spring_io.services.AnimeServices;
 import __SpringBoot2.__star_Spring_io.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +40,13 @@ public class AnimeComtroller {
 
 	@GetMapping(path = 	"/{id}")
 	public ResponseEntity<Anime> findById(@PathVariable Long id){
-		return new ResponseEntity<>(animeServices.findById(id),HttpStatus.OK);
+		return new ResponseEntity<>(animeServices.findByIdOrThrowBedRequestExeption(id),HttpStatus.OK);
 	}
 	
 	@PostMapping //assim como getmaping se ouver apenas um as requisicoes post serao mapeadas automaticamentes para ele
-	public ResponseEntity<Anime> save(@RequestBody Anime anime){
+	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
 		//return ResponseEntity.created(AnimeServices.save(anime));		
-		return new ResponseEntity<>(AnimeServices.save(anime),HttpStatus.CREATED);
+		return new ResponseEntity<>(animeServices.save(animePostRequestBody),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -54,8 +56,8 @@ public class AnimeComtroller {
 	}
 
 	@PutMapping
-	public ResponseEntity<Void> atualisacao(@RequestBody Anime anime){
-		animeServices.atualisacao(anime);
+	public ResponseEntity<Void> atualisacao(@RequestBody AnimePutRequestBody animePutRequestBody){
+		animeServices.atualisacao(animePutRequestBody);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
