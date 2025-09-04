@@ -21,39 +21,21 @@ public class AnimeServices {
 	
 	private final AnimeRepository animeRepository;
 
-	public List<Anime> listAll() {
-		return  animeRepository.findAll();
-	}
+	
 	
 	public Anime findByIdOrThrowBedRequestExeption(Long id) {		
 		return animeRepository.findById(id)
 				.orElseThrow(()->new BedRequestException("id anime not foud"));		
 	}
 
-	public  Anime save(AnimePostRequestBody animePostRequestBody) {
-		return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
-	}
-
-	public void delet(Long id) {
-		animeRepository.delete(findByIdOrThrowBedRequestExeption(id));
+/*	public Anime findByIdOrThrowBedRequestExeption(Long id) {
+			
+		return animeRepository.findById(id)
+				.orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"id anime not foud"));		
 	}
 
 
-	public void atualisacao(AnimePutRequestBody animePutRequestBody) {
-		Anime animeSaved =findByIdOrThrowBedRequestExeption(animePutRequestBody.getId());
-		Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
-		anime.setId(animeSaved.getId());
-		
-		animeRepository.save(anime);
-	}
-
-	public List<Anime> findByName(String name,boolean comten) {
-		if(comten) {
-			return  animeRepository.findByNameContaining(name);
-		}
-		return  animeRepository.findByName(name);
-	}
-	
+*/	
 	
 
 }

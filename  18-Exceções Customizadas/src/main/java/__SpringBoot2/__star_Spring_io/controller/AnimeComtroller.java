@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 
@@ -33,47 +34,20 @@ public class AnimeComtroller {
 	private final DateUtil dateUtil; //sendo costruido por @RequiredArgsConstructor
 	private final AnimeServices animeServices;
 	
-	@GetMapping
-	public ResponseEntity<List<Anime>> list(){
-		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
-		return new ResponseEntity<>(animeServices.listAll(),HttpStatus.OK);
-	}
+
 
 	@GetMapping(path = 	"/{id}")
 	public ResponseEntity<Anime> findById(@PathVariable Long id){
 		return new ResponseEntity<>(animeServices.findByIdOrThrowBedRequestExeption(id),HttpStatus.OK);
 	}
+/*
+	 public Anime findByIdOrThrowBedRequestExeption(Long id) {		
+		return animeRepository.findById(id)
+				.orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"id anime not foud"));		
+	 }
+
+ * 	
+ */
 	
-	@PostMapping //assim como getmaping se ouver apenas um as requisicoes post serao mapeadas automaticamentes para ele
-	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
-		//return ResponseEntity.created(AnimeServices.save(anime));		
-		return new ResponseEntity<>(animeServices.save(animePostRequestBody),HttpStatus.CREATED);
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delet(@PathVariable Long id){
-		animeServices.delet(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	@PutMapping
-	public ResponseEntity<Void> atualisacao(@RequestBody AnimePutRequestBody animePutRequestBody){
-		animeServices.atualisacao(animePutRequestBody);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	@GetMapping(path = 	"/find")/*/http:/localhost:8080/animes/find?name=bersek
-								  /http:/localhost:8080/animes/find?name=tokyo&comtem=true*/
-	public ResponseEntity<List<Anime>> findByName( @RequestParam String name,
-	        @RequestParam( defaultValue = "false" ) Boolean comtem){
-			return new ResponseEntity<>(animeServices.findByName(name,comtem),HttpStatus.OK);
-		
-	} 
-
-
-
-
-
-
 }
 

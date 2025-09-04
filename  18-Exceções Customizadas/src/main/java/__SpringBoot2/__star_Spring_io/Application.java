@@ -11,10 +11,15 @@ public class Application {
 	}
 
 }
-/*foi implementado um metodo get ussando request Param q captura da url;
- * demendendo do que for imcluido na url ele retorna uma lista com
- * todos os nomes q comtem a sequencia de caracteres 
- * ou so os comtem ezatamente os caracteres.
+/*
+ * criaçao do pacote exception e classe BedRequestException
  * 
- * inplementaçao no utimo get da classe Comtroler seguindo em cascata ate Repository.
+ * para ser usada em vez de "ResponseStatusException" 
+ * assim retornando uma exeçao personalizada .
+ * 
+ * assim quando chama o gat id com id inesistente retorna a exeçao personalinada 
+ * 
+ * 
+ * alteraçoes:
+ * a alteraçao foi feita apenas no services .
  * */
