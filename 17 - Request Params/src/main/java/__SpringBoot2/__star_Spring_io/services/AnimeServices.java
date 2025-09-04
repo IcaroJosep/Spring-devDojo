@@ -47,12 +47,13 @@ public class AnimeServices {
 		animeRepository.save(anime);
 	}
 
-	public List<Anime> findByName(String name) {
+	public List<Anime> findByName(String name,boolean comten) {
+		if(comten) {
+			return  animeRepository.findByNameContaining(name);
+		}
 		return  animeRepository.findByName(name);
 	}
-	public List<Anime> findByNameContaining(String name) {
-		return  animeRepository.findByNameContaining(name);
-	}
+	
 	
 
 }

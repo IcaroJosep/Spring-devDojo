@@ -61,16 +61,12 @@ public class AnimeComtroller {
 		animeServices.atualisacao(animePutRequestBody);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	@GetMapping(path = 	"/find")/*/http:/localhost:8080/animes/find?name=bersek
 								  /http:/localhost:8080/animes/find?name=tokyo&comtem=true*/
 	public ResponseEntity<List<Anime>> findByName( @RequestParam String name,
 	        @RequestParam( defaultValue = "false" ) Boolean comtem){
-		if(comtem) {
-			return new ResponseEntity<>(animeServices.findByNameContaining(name),HttpStatus.OK);
-		}
-		
-			return new ResponseEntity<>(animeServices.findByName(name),HttpStatus.OK);
+			return new ResponseEntity<>(animeServices.findByName(name,comtem),HttpStatus.OK);
 		
 	} 
 

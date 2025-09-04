@@ -11,5 +11,10 @@ public class Application {
 	}
 
 }
-/*
+/*foi implementado um metodo get ussando request Param q captura da url;
+ * demendendo do que for imcluido na url ele retorna uma lista com
+ * todos os nomes q comtem a sequencia de caracteres 
+ * ou so os comtem ezatamente os caracteres.
+ * 
+ * inplementaçao no utimo get da classe Comtroler seguindo em cascata ate Repository.
  * */
