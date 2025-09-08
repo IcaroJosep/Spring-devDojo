@@ -12,7 +12,7 @@ import __SpringBoot2.__star_Spring_io.mapper.AnimeMapper;
 import __SpringBoot2.__star_Spring_io.repository.AnimeRepository;
 import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
 import __SpringBoot2.__star_Spring_io.requests.AnimePutRequestBody;
-import exception.BedRequestException;
+import __SpringBoot2.__star_Spring_io.exception.BedRequestException;
 import lombok.RequiredArgsConstructor;
 
 @Service

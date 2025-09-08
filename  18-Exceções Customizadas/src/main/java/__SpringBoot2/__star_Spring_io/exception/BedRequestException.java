@@ -1,4 +1,4 @@
-package exception;
+package __SpringBoot2.__star_Spring_io.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
