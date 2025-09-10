@@ -11,6 +11,7 @@ public class Application {
 	}
 
 }
+
 /*
  * criaçao do pacote exception e classe BedRequestException
  * 
