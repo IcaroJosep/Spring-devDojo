@@ -25,11 +25,21 @@ public class AnimeServices {
 	
 	@Transactional(rollbackOn = Exception.class)
 	public  Anime save(AnimePostRequestBody animePostRequestBody){
-		if(animeRepository.findByName(animePostRequestBody.getName()).size()>0) {
+		
+		//sem rollback
+		//logica problema>nao salva 
+		//evida usso desnecesario de id's
+		if(animeRepository.findByName(animePostRequestBody.getName()).size()>1) {
 			throw new BedRequestException("ja existente");
 		}
+		//se ocorer um erro dentro deste save ele fas rollback
 		Anime anime = animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
-		 
+	
+		//para o usso de rollback: deve estar a baixo do salavamento 
+		//logica sava>problema > rollback
+	/*	if(animeRepository.findByName(animePostRequestBody.getName()).size()>1) {
+			throw new BedRequestException("ja existente");
+		}*/ 
 		return anime;
 		
 	}
