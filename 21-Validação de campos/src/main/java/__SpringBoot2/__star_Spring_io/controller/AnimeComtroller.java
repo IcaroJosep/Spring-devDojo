@@ -31,22 +31,17 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class AnimeComtroller {
 	
-	/*inplementaçao feita na classe anime services com utilisaçao de bedrequestExeption
-	 * 
-	 * salva anime depos testa caso aja mas de um da rollback e tirando o anime salvo
-	 * 
-	 * :problema ele como ele salvou ele pula para o proximo id!
-	 * 
-	 * */
-	
-
 	private final DateUtil dateUtil; //sendo costruido por @RequiredArgsConstructor
 	private final AnimeServices animeServices;
 	
+	/* @valid valoda os parametros obrigatorios colocados na classes TDO's AnimePostRequestBody e animePutRequestBody.
+	 * */
+	
+	
 
-	@PostMapping //assim como getmaping se ouver apenas um as requisicoes post serao mapeadas automaticamentes para ele
+	@PostMapping
 	public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
-		//return ResponseEntity.created(AnimeServices.save(anime));		
+			
 		return new ResponseEntity<>(animeServices.save(animePostRequestBody),HttpStatus.CREATED);
 	}
 	
