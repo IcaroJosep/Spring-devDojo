@@ -1,0 +1,35 @@
+package __SpringBoot2.__star_Spring_io.services;
+
+
+import org.springframework.stereotype.Service;
+
+import __SpringBoot2.__star_Spring_io.dominio.Anime;
+import __SpringBoot2.__star_Spring_io.exception.BedRequestException;
+import __SpringBoot2.__star_Spring_io.mapper.AnimeMapper;
+import __SpringBoot2.__star_Spring_io.repository.AnimeRepository;
+import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class AnimeServices {
+	
+	private final AnimeRepository animeRepository;
+
+	
+	@Transactional(rollbackOn = Exception.class)
+	public  Anime save(AnimePostRequestBody animePostRequestBody){
+		
+		if(animeRepository.findByName(animePostRequestBody.getName()).size()>1) {
+			throw new BedRequestException("ja existente");
+		}
+
+		Anime anime = animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
+	
+		return anime;
+		
+	}
+	
+
+}
