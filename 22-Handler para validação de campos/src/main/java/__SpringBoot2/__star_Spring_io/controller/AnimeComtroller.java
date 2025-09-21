@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
 import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
@@ -22,12 +23,20 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 
 
-/* handler "RestExceptionHandler" captura as exexoes q escapao de comtroler 
- * e da o tratamento para cada tipo que tu especificar nele
- * chamando as classe de excepion relativas.
- * 
- * 
- * */
+/*
+ * A classe RestExceptionHandler estende ResponseEntityExceptionHandler,
+ * que já fornece implementações padrão para o tratamento de várias exceções do Spring MVC.
+ *
+ * Aqui foram adicionados:
+ * - Métodos @ExceptionHandler para tratar exceções específicas (como BedRequestException e MethodArgumentNotValidException).
+ * - Sobrescrita do método handleExceptionInternal(), herdado da superclasse,
+ *   permitindo personalizar a resposta para erros não tratados explicitamente,
+ *   retornando um objeto ExceptionDetails padronizado.
+ *
+ * Dessa forma, a aplicação passa a ter mensagens de erro consistentes e centralizadas,
+ * tanto para exceções personalizadas quanto para exceções genéricas.
+ */
+
 
 public class AnimeComtroller {
 	
