@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class AnimePutRequestBody {
 	@NotNull
-	@Min(1)//menor numero sendo 1
+	@Min(1)
 	private Long id;
 	@NotEmpty(message = "nao permitido nome null ou vazio")
 	private String name;

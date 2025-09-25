@@ -38,9 +38,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 				.developerMessage(bre.getClass().getName())
 				.build(),HttpStatus.BAD_REQUEST);
 	}
-	@ExceptionHandler(MethodArgumentNotValidException.class)//toda ves e for lançado o erro MethodArgumentNotValidException ele retornara este metodo 
-	public ResponseEntity<ValidationException> handlMethodArgumentNotValidException(MethodArgumentNotValidException exception){
-
+	//@ExceptionHandler(MethodArgumentNotValidException.class)//toda ves e for lançado o erro MethodArgumentNotValidException ele retornara este metodo 
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+	        MethodArgumentNotValidException exception,
+	        HttpHeaders headers,
+	        HttpStatusCode status,
+	        WebRequest request){
+		
+	/*@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ValidationException> handlMethodArgumentNotValidException(
+	MethodArgumentNotValidException exception){
+*/
+		
 		
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		String fields = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining(", "));

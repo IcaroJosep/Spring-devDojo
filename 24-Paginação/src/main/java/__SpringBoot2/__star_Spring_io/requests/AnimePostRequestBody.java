@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class AnimePostRequestBody {
-	@NotEmpty(message = "o nome de um anime nao pode ser vazio") // Empty ja faz o tratamento de null
-	// @NotNull(message = "o nome de um anime nao pode ser nullo")
+	@NotEmpty(message = "o nome de um anime nao pode ser vazio") 
 	private String name;
 }

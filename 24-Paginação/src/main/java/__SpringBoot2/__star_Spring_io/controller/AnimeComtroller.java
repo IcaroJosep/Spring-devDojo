@@ -31,7 +31,7 @@ import lombok.extern.log4j.Log4j2;
 
 public class AnimeComtroller {
 	
-	private final DateUtil dateUtil; //sendo costruido por @RequiredArgsConstructor
+	private final DateUtil dateUtil; 
 	private final AnimeServices animeServices;
 	
 	

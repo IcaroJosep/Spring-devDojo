@@ -46,11 +46,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	        HttpStatusCode status,
 	        WebRequest request){
 		
-	/*@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ValidationException> handlMethodArgumentNotValidException(
-	MethodArgumentNotValidException exception){
-*/
-		
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		String fields = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining(", "));
 		String fieldsMessage = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(", "));
