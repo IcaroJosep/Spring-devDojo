@@ -27,18 +27,6 @@ public class AnimeServices {
 	}
 	
 	
-	@Transactional(rollbackOn = Exception.class)
-	public  Anime save(AnimePostRequestBody animePostRequestBody){
-		
-		if(animeRepository.findByName(animePostRequestBody.getName()).size()>1) {
-			throw new BedRequestException("ja existente");
-		}
-
-		Anime anime = animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
-	
-		return anime;
-		
-	}
 	
 
 }
