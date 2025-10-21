@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
@@ -28,9 +29,12 @@ public class AnimeComtroller {
 	
 	
 	@GetMapping
-	public ResponseEntity<Page<Anime>> list(Pageable pageable){
+	public ResponseEntity<Page<Anime>> list( Pageable pageable
+									/*@RequestParam (defaultValue = "0")	int page ,
+									@RequestParam (defaultValue = "10")	int size ,	
+									@RequestParam (defaultValue = "name")	String sortby*/){
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
-		return ResponseEntity.ok(animeServices.listAll(pageable));
+		return ResponseEntity.ok(animeServices.listAll(pageable /*page,size,sortby*/));
 	}
 	
 }
