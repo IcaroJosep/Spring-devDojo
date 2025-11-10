@@ -32,6 +32,7 @@ public class AnimeComtroller {
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
 		return ResponseEntity.ok(animeServices.listAll(pageable));
 	}
+	//por padrao pageble ja aceita requisicoes comdendo page,size e sort
 	
 }
 
