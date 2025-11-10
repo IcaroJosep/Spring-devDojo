@@ -30,7 +30,8 @@ public class AnimeComtroller {
 	
 	@GetMapping
 	public ResponseEntity<Page<Anime>> list( Pageable pageable
-									/*@RequestParam (defaultValue = "0")	int page ,
+										//metodo nao usuall de fazer paginaçao com parametros -- na aula seguinte sera mostrado o modo coreto
+									/*@RequestParam (defaultValue = "0")	int page ,    
 									@RequestParam (defaultValue = "10")	int size ,	
 									@RequestParam (defaultValue = "name")	String sortby*/){
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
