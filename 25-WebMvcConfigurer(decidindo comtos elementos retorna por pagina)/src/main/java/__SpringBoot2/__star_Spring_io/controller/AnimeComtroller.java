@@ -27,7 +27,7 @@ public class AnimeComtroller {
 	private final AnimeServices animeServices;
 	
 	
-	@GetMapping						//pageable resolver implementado no pecage comfigurer para aceitar pageble com parametros!!
+	@GetMapping						//pageable resolver implementado no pecage comfigurer para aceitar pageble com parametros comvalor defalt meenor q o padao de 20!!
 	public ResponseEntity<Page<Anime>> list(Pageable pageable){
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
 		return ResponseEntity.ok(animeServices.listAll(pageable));

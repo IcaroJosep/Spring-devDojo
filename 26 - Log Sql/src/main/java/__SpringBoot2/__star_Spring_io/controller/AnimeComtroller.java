@@ -27,12 +27,11 @@ public class AnimeComtroller {
 	private final AnimeServices animeServices;
 	
 	
-	@GetMapping						//pageable resolver implementado no pecage comfigurer para aceitar pageble com parametros!!
+	@GetMapping					//altteraçao em .proprieties na parte de queries SQL geradas pelo Hibernate (final do arqquivo).
 	public ResponseEntity<Page<Anime>> list(Pageable pageable){
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
 		return ResponseEntity.ok(animeServices.listAll(pageable));
 	}
-	//por padrao pageble ja aceita requisicoes comdendo page,size e sort
 	
 }
 
