@@ -4,12 +4,16 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
+import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
 import __SpringBoot2.__star_Spring_io.services.AnimeServices;
 import __SpringBoot2.__star_Spring_io.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +35,12 @@ public class AnimeComtroller {
 	public ResponseEntity<Page<Anime>> list(Pageable pageable){
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
 		return ResponseEntity.ok(animeServices.listAll(pageable));
+	}
+	
+	@PostMapping //assim como getmaping se ouver apenas um as requisicoes post serao mapeadas automaticamentes para ele
+	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
+		//return ResponseEntity.created(AnimeServices.save(anime));		
+		return new ResponseEntity<>(animeServices.save(animePostRequestBody),HttpStatus.CREATED);
 	}
 	
 }
