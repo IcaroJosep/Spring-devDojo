@@ -1,3 +1,4 @@
+package request;
 
 public class AnimePostRequestBody {
 	private String name;
