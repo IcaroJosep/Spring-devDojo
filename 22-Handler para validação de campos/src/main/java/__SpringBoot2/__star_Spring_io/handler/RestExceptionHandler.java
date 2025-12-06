@@ -31,6 +31,7 @@ public class RestExceptionHandler {
 				.developerMessage(bre.getClass().getName())
 				.build(),HttpStatus.BAD_REQUEST);
 	}
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)//toda ves e for lançado o erro MethodArgumentNotValidException ele retornara este metodo 
 	public ResponseEntity<ValidationException> handlMethodArgumentNotValidException(MethodArgumentNotValidException exception){
 

@@ -17,7 +17,7 @@ public class main extends services {
 
 		do {
 
-			System.out.println("selecione a opcao desejada:\n1-adicionar anime \n2-listar todos\n0-sair");
+			System.out.println("selecione a opcao desejada:\n1-adicionar anime \n2-listar todos\n3-procurar nome de anime \n0-sair");
 
 			op = scn.nextInt();
 			switch (op) {
@@ -30,6 +30,15 @@ public class main extends services {
 				case 2: {
 					scn.nextLine();
 					findAll(scn);
+					break;
+				}
+				case 3:{
+					scn.nextLine();
+					String name=scn.nextLine();
+					System.out.println("vc deseja todos os nomes q comtenhao estes caracteres:? true ou false:");
+					boolean comtem=scn.nextBoolean();
+					scn.nextLine();
+					services.findByName(name,comtem,scn);
 					break;
 				}
 			}
