@@ -33,7 +33,11 @@ public class DavdojoWebMvcConfigurer implements WebMvcConfigurer {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		PageableHandlerMethodArgumentResolver pageHandler = new PageableHandlerMethodArgumentResolver();
+		
 		pageHandler.setFallbackPageable(PageRequest.of(0, 5));
+		
+		pageHandler.setMaxPageSize(50);
+		
 		resolvers.add(pageHandler);
 	}
 

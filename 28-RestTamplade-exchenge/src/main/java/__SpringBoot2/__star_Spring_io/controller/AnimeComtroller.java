@@ -17,6 +17,7 @@ import __SpringBoot2.__star_Spring_io.dominio.Anime;
 import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
 import __SpringBoot2.__star_Spring_io.services.AnimeServices;
 import __SpringBoot2.__star_Spring_io.util.DateUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -33,14 +34,14 @@ public class AnimeComtroller {
 
 	@GetMapping // altteraçao em .proprieties na parte de queries SQL geradas pelo Hibernate
 				// (final do arqquivo).
-	public ResponseEntity<Page<Anime>> list(Pageable pageable) {
+	public ResponseEntity<Page<Anime>> list(@Valid Pageable pageable) {
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
 		Page<Anime> listAnime = animeServices.listAll(pageable);
 		return ResponseEntity.ok(listAnime);
 	}
 
 	@GetMapping(path = "findByName")	
-	public ResponseEntity<Page<Anime>> list(Pageable pageable, @RequestParam String name,
+	public ResponseEntity<Page<Anime>> list(@Valid Pageable pageable, @RequestParam String name,
 			@RequestParam(defaultValue = "false") Boolean comtem) {
 		Page<Anime> listAnime = animeServices.findByName(pageable, name, comtem);
 		return ResponseEntity.ok(listAnime);
@@ -48,8 +49,9 @@ public class AnimeComtroller {
 
 	@PostMapping // assim como getmaping se ouver apenas um as requisicoes post serao mapeadas
 					// automaticamentes para ele
-	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+	public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
 		// return ResponseEntity.created(AnimeServices.save(anime));
+		
 		Anime animeSalvo = animeServices.save(animePostRequestBody);
 		return new ResponseEntity<>(animeSalvo, HttpStatus.CREATED);
 	}

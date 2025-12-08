@@ -11,12 +11,19 @@ import __SpringBoot2.__star_Spring_io.requests.AnimePutRequestBody;
 //prefira ussar @Mapper quando for grandes projetos por comvençao
 
 @Mapper(componentModel = "spring")//ingeta dependencia no String para ussar vc precisa atribuir uma istancia "private final AnimeMapper"
-public abstract class AnimeMapper {
-	public static final AnimeMapper INSTANCE = Mappers.getMapper(AnimeMapper.class);//ussa a istancia como metodo statico da clase
-	
-	public abstract Anime toAnime(AnimePostRequestBody animePostRequestBody);
-	
-	public abstract Anime toAnime(AnimePutRequestBody animePutRequestBody);
-
+public interface AnimeMapper {
+    
+    Anime toAnime(AnimePostRequestBody animePostRequestBody);
+    
+    Anime toAnime(AnimePutRequestBody animePutRequestBody);
 }
 
+/*@Mapper // REMOVA componentModel = "spring"
+public interface AnimeMapper {
+    
+    public static final AnimeMapper INSTANCE = Mappers.getMapper(AnimeMapper.class);
+    
+    Anime toAnime(AnimePostRequestBody animePostRequestBody);
+    
+    Anime toAnime(AnimePutRequestBody animePutRequestBody);
+}*/

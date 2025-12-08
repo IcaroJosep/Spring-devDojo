@@ -10,6 +10,8 @@ import __SpringBoot2.__star_Spring_io.exception.BedRequestException;
 import __SpringBoot2.__star_Spring_io.mapper.AnimeMapper;
 import __SpringBoot2.__star_Spring_io.repository.AnimeRepository;
 import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
+import __SpringBoot2.__star_Spring_io.seguranca.PageValid;
+import __SpringBoot2.__star_Spring_io.seguranca.PageableValidation;
 import __SpringBoot2.__star_Spring_io.seguranca.Sanatizador;
 import lombok.RequiredArgsConstructor;
 
@@ -18,21 +20,33 @@ import lombok.RequiredArgsConstructor;
 public class AnimeServices {
 	
 	private final AnimeRepository animeRepository;
+	private final AnimeMapper animeMapper;
 
 	
 	public Page<Anime> listAll(Pageable pageable) {
-		return  animeRepository.findAll(pageable);
+			Pageable pageableRequest = PageableValidation.validateAndSanitize(pageable);
+			
+			Page<Anime> pSani = PageValid.ValidaSanitizaPageAnime(animeRepository.findAll(pageableRequest));
+			
+		return  pSani;
 	}
 
 
 
 
 	public Page<Anime> findByName(Pageable pageable,String name, Boolean comtem) {
+		Pageable pageableRequest = PageableValidation.validateAndSanitize(pageable);
+		Page<Anime> pSani;
+		
 		if (comtem) {
-			return  animeRepository.findByNameContaining(name,pageable);
+			pSani = PageValid.ValidaSanitizaPageAnime(animeRepository.findByName(name,pageableRequest));
+			return pSani;
 		}
 		
-		return animeRepository.findByName(name,pageable);
+		pSani = PageValid.ValidaSanitizaPageAnime(animeRepository.findByName(name,pageableRequest));
+				
+		
+		return pSani;
 	}
 
 	
@@ -50,7 +64,7 @@ public class AnimeServices {
 		}
 		dtoSanatizado.setName(nameSani);
 		
-		Anime animeInp = AnimeMapper.INSTANCE.toAnime(dtoSanatizado);
+		Anime animeInp = animeMapper.toAnime(dtoSanatizado);
 		Anime animeSalvo = animeRepository.save(animeInp);
 		
 		return Sanatizador.saniAnime(animeSalvo);
