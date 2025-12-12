@@ -15,8 +15,8 @@ public class main extends services {
 		int op = 0;
 		Scanner scn = new Scanner(System.in);
 
-		do {
-
+		do { 
+			
 			System.out.println("selecione a opcao desejada:\n1-adicionar anime \n2-listar todos\n3-procurar nome de anime \n0-sair");
 
 			op = scn.nextInt();
