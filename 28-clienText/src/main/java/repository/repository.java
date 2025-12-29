@@ -59,8 +59,8 @@ public class repository {
 				urlRequest, 
 				HttpMethod.GET, 
 				null,
-				new ParameterizedTypeReference<PageResponse<Anime>>() {
-				});
+				new ParameterizedTypeReference<PageResponse<Anime>>() {}
+				);
 		return response.getBody();
 	}
 

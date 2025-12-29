@@ -1,0 +1,34 @@
+package main;
+
+import java.util.List;
+
+public class PageResponse<T> {
+	private List<T> content;
+    private int number;
+    private int size;
+    private long totalElements;
+    private int totalPages;
+    private boolean first;
+    private boolean last;
+	public List<T> getContent() {
+		return content;
+	}
+	public int getNumber() {
+		return number;
+	}
+	public int getSize() {
+		return size;
+	}
+	public long getTotalElements() {
+		return totalElements;
+	}
+	public int getTotalPages() {
+		return totalPages;
+	}
+	public boolean isFirst() {
+		return first;
+	}
+	public boolean isLast() {
+		return last;
+	}
+}
