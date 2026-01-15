@@ -10,15 +10,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
 
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.jpa.properties.jakarta.persistence.validation.mode=none"
+    })
 @DisplayName("testes para o repositorio animes")
 @Log4j2
+
 class AnimeRepositoryTest {
 	
 	@Autowired
@@ -109,6 +114,19 @@ class AnimeRepositoryTest {
 		Assertions.assertThat(animes).isNotNull();
 	}
 	
+	
+	@Test 
+	@DisplayName("Save thorow ConstraintVionalionExeption when name is enpty") 
+	void save_ConstraintVionalionExeption_WhenNameIsEnpty() { 
+		Anime anime = new Anime(); 
+	
+		Assertions.assertThatThrownBy(() -> {
+	        animeRepository.save(anime);
+	        animeRepository.flush();
+	    }).isInstanceOf(DataIntegrityViolationException.class);
+	
+		
+	}
 	
 
 }
