@@ -97,6 +97,17 @@ class AnimeRepositoryTest {
 
 	}	
 	
+	@Test
+	@DisplayName("Find By Name Returns Enpty list when no anime is found")
+	void findByName_ReturneEnptyList_WhenAnimeIsNotFound() {
+			
+		
+		List<Anime> animes = this.animeRepository.findByName("xuxa",PageRequest.of(0, 5)).getContent();
+		
+		Assertions.assertThat(animes).isEmpty();
+		Assertions.assertThat(animes).isNotNull();
+	}
+	
 	
 
 }
