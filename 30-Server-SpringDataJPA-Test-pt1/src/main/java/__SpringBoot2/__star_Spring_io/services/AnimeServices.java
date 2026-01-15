@@ -78,11 +78,11 @@ public class AnimeServices {
 	}
 
 		@Transactional
-		public Anime updateForName(@Valid AnimePostRequestBody animePostRequestBody) {
+	public Anime updateForName(@Valid AnimePostRequestBody animePostRequestBody) {
 			Optional<Anime> caixa = animeRepository.findById(animePostRequestBody.getId());
 			Anime anime = caixa.orElseThrow(()->new BedRequestException("id nao encomtrado"));
 	    	anime.setName(animePostRequestBody.getName());		
 			
 			return anime;
-		}
+	}
 }

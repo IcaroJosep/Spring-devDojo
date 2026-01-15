@@ -2,36 +2,101 @@ package __SpringBoot2.__star_Spring_io.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
+import lombok.extern.log4j.Log4j2;
 
 
 @DataJpaTest
-//@DisplayName("testes para o repositorio animes")
+@DisplayName("testes para o repositorio animes")
+@Log4j2
 class AnimeRepositoryTest {
 	
 	@Autowired
 	private AnimeRepository animeRepository;
 	
+	private Anime createAnime() {
+		return Anime.builder().name("zica full").build();
+	}
+	
 	@Test
-	@DisplayName("Save Creates anime when Successfull")
-	void save_PersistenciaAnime_WhenSuccessful() {
-		Anime animeToBeSaved  = createAnime();
+	@DisplayName("Save Persist anime when Successfull")
+	void save_PersistAnime_WhenSuccessful() {
+		Anime animeToBeSaved  = createAnime();	
 		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
+		
+		log.info("To Be Saved: {}, Saved: {}", animeToBeSaved, animeSaved);
 		
 		Assertions.assertThat(animeSaved).isNotNull();
 		Assertions.assertThat(animeSaved.getId()).isNotNull();
 		Assertions.assertThat(animeSaved.getName()).isEqualTo(animeToBeSaved.getName());
 	}
 	
-	private Anime createAnime() {
-		return Anime.builder().name("zica full").build();
+		
+	@Test
+	@DisplayName("Save update anime when Successfull")
+	void save_UpdateAnime_WhenSuccessful() {
+		Anime animeToBeSaved  = createAnime();	
+		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
+		
+		animeSaved.setName("kakashi");
+		Anime animeUpdated = this.animeRepository.save(animeSaved);
+		
+		log.info("Updated: {}, Saved: {}", animeUpdated, animeSaved);
+		
+		Assertions.assertThat(animeUpdated).isNotNull();
+		Assertions.assertThat(animeUpdated.getId()).isNotNull();
+		Assertions.assertThat(animeUpdated.getName()).isEqualTo(animeSaved.getName());
+		Assertions.assertThat(animeUpdated.getId()).isEqualTo(animeSaved.getId());
+
 	}
+	
+	@Test
+	@DisplayName("Delete Remove anime when Successfull")
+	void delete_RemovesAnime_WhenSuccessful() {
+		Anime animeToBeSaved  = createAnime();	
+		
+		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
+		
+		
+		
+		this.animeRepository.delete(animeSaved);
+		this.animeRepository.flush();
+		
+		
+		Optional<Anime> animeOptional = this.animeRepository.findById(animeSaved.getId());
+		
+		Assertions.assertThat(animeOptional).isEmpty();
+
+	}
+	
+	@Test
+	@DisplayName("Find By Name Returns list of anime when Successfull")
+	void findByName_ReturneListOfAnime_WhenSuccessful() {
+		Anime animeToBeSaved  = createAnime();	
+		
+		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
+		
+		String name = animeSaved.getName();
+		
+		List<Anime> animes = this.animeRepository.findByName(name,PageRequest.of(0, 5)).getContent();
+		
+		log.info("anime salvo : {} , name pesquisado : {} , anime listado: {}.",animeSaved,name,animes);
+		
+		Assertions.assertThat(animes).isNotEmpty();
+		Assertions.assertThat(animes).contains(animeSaved);
+
+	}	
+	
 	
 
 }
