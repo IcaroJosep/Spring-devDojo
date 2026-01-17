@@ -14,13 +14,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
+import jakarta.persistence.Column;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
 
-
+//a validação do Jakarta Validation é desativada :
 @DataJpaTest(properties = {
         "spring.jpa.properties.jakarta.persistence.validation.mode=none"
     })
+
 @DisplayName("testes para o repositorio animes")
 @Log4j2
 
@@ -115,9 +117,29 @@ class AnimeRepositoryTest {
 	}
 	
 	
+	/*
+	 * Este teste valida a restrição definida pela anotação:
+	 * @Column(nullable = false, length = 100)
+	 *
+	 * Essa anotação não pertence à validação do Bean Validation (Jakarta Validation),
+	 * mas sim à definição da estrutura da coluna no banco de dados. Ou seja, é o próprio
+	 * banco que impede que um valor null seja persistido.
+	 *
+	 * Por esse motivo, a validação do Jakarta Validation é desativada neste teste através de:
+	 *
+	 * @DataJpaTest(properties = {
+	 *   "spring.jpa.properties.jakarta.persistence.validation.mode=none"
+	 * })
+	 *
+	 * Assim, anotações como @NotBlank e @NotEmpty são ignoradas, permitindo que o teste
+	 * valide exclusivamente a restrição de integridade do banco de dados.
+	 *
+	 * O erro esperado nesse cenário é:
+	 * DataIntegrityViolationException
+	 */
 	@Test 
-	@DisplayName("Save thorow ConstraintVionalionExeption when name is enpty") 
-	void save_ConstraintVionalionExeption_WhenNameIsEnpty() { 
+	@DisplayName("Save thorow DataIntegrityViolationException when name is enpty") 
+	void save_DataIntegrityViolationException_WhenNameIsEnpty() { 
 		Anime anime = new Anime(); 
 	
 		Assertions.assertThatThrownBy(() -> {
