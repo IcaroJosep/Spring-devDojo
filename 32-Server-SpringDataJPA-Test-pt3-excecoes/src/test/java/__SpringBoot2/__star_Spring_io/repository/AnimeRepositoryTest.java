@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -138,15 +139,49 @@ class AnimeRepositoryTest {
 	 * DataIntegrityViolationException
 	 */
 	@Test 
-	@DisplayName("Save thorow DataIntegrityViolationException when name is enpty") 
+	@DisplayName("Save thorow DataIntegrityViolationException when name is null or 100<") 
 	void save_DataIntegrityViolationException_WhenNameIsEnpty() { 
 		Anime anime = new Anime(); 
 	
-		Assertions.assertThatThrownBy(() -> {
+	/*	Assertions.assertThatThrownBy(() -> {
 	        animeRepository.save(anime);
 	        animeRepository.flush();
 	    }).isInstanceOf(DataIntegrityViolationException.class);
+	*/
+		Assertions.assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> this.animeRepository.saveAndFlush(anime));
+		
+		Anime anime101 = Anime.builder().name("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").build();
+		Assertions.assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> this.animeRepository.saveAndFlush(anime101));
 	
+	}
+	
+	@Nested
+	@DisplayName("teste de restricoes sobre a tabela anime")
+	class collunmConstraints{
+		@Autowired
+		private AnimeRepository animeRepository;
+		
+		@Test
+		@DisplayName("nullable = false - deve regeitar null")
+		void deveRejeiratNull() {
+			Anime anime = new Anime(); 
+			
+			Assertions.assertThatThrownBy(() -> {
+		        animeRepository.save(anime);
+		        animeRepository.flush();
+		    }).isInstanceOf(DataIntegrityViolationException.class);
+		}
+		
+		@Test
+		@DisplayName(" length=100 - deve rejeitar nome com 100+ caracteres")
+		void deveRefeitarComMaisQ100() {
+			Anime anime = new Anime(); 
+			
+			Anime anime101 = Anime.builder().name("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").build();
+			Assertions.assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> this.animeRepository.saveAndFlush(anime101));
+		
+		}
+		
 		
 	}
 	
