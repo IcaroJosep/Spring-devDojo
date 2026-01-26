@@ -1,0 +1,31 @@
+ package __SpringBoot2.__star_Spring_io.dominio;
+
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data 
+@AllArgsConstructor
+@NoArgsConstructor 
+@Entity 
+@Builder 
+public class Anime {
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@NotBlank(message = "o nome de um anime nao pode ser vazio")
+	@Column(nullable = false, length = 100)
+	private String name;
+	
+}
