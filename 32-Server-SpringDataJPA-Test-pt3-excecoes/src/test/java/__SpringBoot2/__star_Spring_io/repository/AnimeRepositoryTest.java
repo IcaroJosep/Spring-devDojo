@@ -15,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
+import __SpringBoot2.__star_Spring_io.util.AnimeCreator;
 import jakarta.persistence.Column;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
@@ -32,14 +33,15 @@ class AnimeRepositoryTest {
 	@Autowired
 	private AnimeRepository animeRepository;
 	
-	private Anime createAnime() {
+ // trocado por usso da classe util de AnimeCreate
+ /*	private Anime createAnime() {
 		return Anime.builder().name("zica full").build();
 	}
-	
+*/	
 	@Test
 	@DisplayName("Save Persist anime when Successfull")
 	void save_PersistAnime_WhenSuccessful() {
-		Anime animeToBeSaved  = createAnime();	
+		Anime animeToBeSaved  = AnimeCreator.createAnimeToBeSaved();
 		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 		
 		log.info("To Be Saved: {}, Saved: {}", animeToBeSaved, animeSaved);
@@ -53,7 +55,7 @@ class AnimeRepositoryTest {
 	@Test
 	@DisplayName("Save update anime when Successfull")
 	void save_UpdateAnime_WhenSuccessful() {
-		Anime animeToBeSaved  = createAnime();	
+		Anime animeToBeSaved  = AnimeCreator.createAnimeToBeSaved();	
 		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 		
 		animeSaved.setName("kakashi");
@@ -71,7 +73,7 @@ class AnimeRepositoryTest {
 	@Test
 	@DisplayName("Delete Remove anime when Successfull")
 	void delete_RemovesAnime_WhenSuccessful() {
-		Anime animeToBeSaved  = createAnime();	
+		Anime animeToBeSaved  = AnimeCreator.createAnimeToBeSaved();	
 		
 		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 		
@@ -90,7 +92,7 @@ class AnimeRepositoryTest {
 	@Test
 	@DisplayName("Find By Name Returns list of anime when Successfull")
 	void findByName_ReturneListOfAnime_WhenSuccessful() {
-		Anime animeToBeSaved  = createAnime();	
+		Anime animeToBeSaved  = AnimeCreator.createAnimeToBeSaved();	
 		
 		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 		
