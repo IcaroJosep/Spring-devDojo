@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class AnimePostRequestBody {
 	
-	@NotNull(message = "id nao pede ser nullo ou vazio")
+	//@NotNull(message = "id nao pede ser nullo ou vazio")
 	@Min(value = 1l,message = "valor deve ser maior q 1")
 	@Max(value = 999999999l ,message = "id deve ser menor q 999999999")
 	@Digits(integer = 9,fraction = 0 ,message = "id nao pode ter mas de 9 digitos ")
