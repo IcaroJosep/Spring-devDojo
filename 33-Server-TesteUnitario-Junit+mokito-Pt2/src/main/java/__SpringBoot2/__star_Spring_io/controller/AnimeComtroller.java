@@ -51,7 +51,7 @@ public class AnimeComtroller {
 	}
 
 	@GetMapping(path = "findByName")
-	public ResponseEntity<Page<Anime>> list(
+	public ResponseEntity<Page<Anime>> findByName(
 			Pageable pageable,
 			@RequestParam @NotBlank(message = "Nome não pode ser vazio")
 			@Size(min = 1, max = 50, message = "Nome deve ter entre 1 e 50 caracteres") 

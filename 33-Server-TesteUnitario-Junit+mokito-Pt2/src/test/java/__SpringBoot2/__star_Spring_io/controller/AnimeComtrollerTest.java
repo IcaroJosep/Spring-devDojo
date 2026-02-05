@@ -24,6 +24,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 // Classes do seu próprio projeto
@@ -78,7 +80,12 @@ class AnimeComtrollerTest {
         
         // 2. Ação (When): Chamamos o método do Controller que queremos testar
         // .getBody() pega o conteúdo de dentro do ResponseEntity
-        Page<Anime> animepages = animeComtroller.list(null).getBody();
+        ResponseEntity<Page<Anime>> response = animeComtroller.list(null);
+        
+        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Assertions.assertThat(response.getBody()).isNotNull();
+        
+        	Page<Anime> animepages=response.getBody();
         
         // 3. Verificação (Then): Usamos o AssertJ para garantir que o resultado é o que esperamos
         Assertions.assertThat(animepages).isNotNull(); // A página não pode ser nula
@@ -92,11 +99,7 @@ class AnimeComtrollerTest {
     }
     
     
-    
-    
-    
-    
-    
+       
     
     
 }
