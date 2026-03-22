@@ -3,6 +3,8 @@ package __SpringBoot2.__star_Spring_io.config;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +19,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration // Indica que esta classe contém definições de Beans e configurações do Spring
 @EnableWebSecurity // Ativa a segurança web no projeto (filtro de segurança do Spring)
 @Log4j2 // Anotação do Lombok para permitir o uso do 'log.info' ou 'log.error' no console
+
+/*anotaçao depreciada */
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity //prePostEnabled = true. Na @EnableMethodSecurity, isso já é o comportamento padrão.
 public class SecurityConfig {
 
     /**
