@@ -42,6 +42,8 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             
+            .formLogin(withDefaults()) //atribui pagina http padrao de login
+            
             // Ativa a autenticação do tipo HTTP Basic (aquela janelinha do navegador ou Postman)
             // withDefaults() aplica as configurações padrão do Spring para o login básico
             .httpBasic(withDefaults());

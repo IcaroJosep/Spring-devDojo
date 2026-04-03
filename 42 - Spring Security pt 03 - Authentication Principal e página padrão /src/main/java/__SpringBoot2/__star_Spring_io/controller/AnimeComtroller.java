@@ -1,6 +1,7 @@
 package __SpringBoot2.__star_Spring_io.controller;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import __SpringBoot2.__star_Spring_io.dominio.Anime;
 import __SpringBoot2.__star_Spring_io.mapper.AnimeMapper;
+import __SpringBoot2.__star_Spring_io.repository.AnimeRepository;
 import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
 import __SpringBoot2.__star_Spring_io.services.AnimeServices;
 import __SpringBoot2.__star_Spring_io.util.DateUtil;
@@ -42,6 +44,7 @@ public class AnimeComtroller {
 
 	private final DateUtil dateUtil;
 	private final AnimeServices animeServices;
+	private final AnimeRepository animeRepository;
 
 	@GetMapping // altteraçao em .proprieties na parte de queries SQL geradas pelo Hibernate
 				// (final do arqquivo).
@@ -67,6 +70,18 @@ public class AnimeComtroller {
 		Page<Anime> listAnime = animeServices.findByName(pageable, name, comtem);
 
 		return ResponseEntity.ok(listAnime);
+	}
+	
+	@GetMapping(path = "by-id/{id}")
+	public ResponseEntity<Optional<Anime>> findByid(@PathVariable long id,
+													//captura de altencicaçao recebida e atribuiçao a de valor
+													@AuthenticationPrincipal UserDetails userDetails ){
+			log.info(userDetails);
+				
+		return ResponseEntity.ok(animeRepository.findById(id));/*ATENÇAO ussi incoreto de repository para 
+																funcionar de ve ingetado "private final AnimeRepository animeRepository;"
+																que se encomtra no inicio da classe
+		 														*/
 	}
 
 	@PostMapping // assim como getmaping se ouver apenas um as requisicoes post serao mapeadas
