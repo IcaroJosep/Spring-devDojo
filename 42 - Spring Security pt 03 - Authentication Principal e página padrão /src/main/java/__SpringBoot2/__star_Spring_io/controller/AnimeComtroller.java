@@ -72,7 +72,17 @@ public class AnimeComtroller {
 		return ResponseEntity.ok(listAnime);
 	}
 	
-	
+	@GetMapping(path = "by-id/{id}")
+	public ResponseEntity<Optional<Anime>> findByid(@PathVariable long id,
+													//captura de altencicaçao recebida e atribuiçao a de valor
+													@AuthenticationPrincipal UserDetails userDetails ){
+			log.info(userDetails);
+				
+		return ResponseEntity.ok(animeRepository.findById(id));/*ATENÇAO ussi incoreto de repository para 
+																funcionar de ve ingetado "private final AnimeRepository animeRepository;"
+																que se encomtra no inicio da classe
+		 														*/
+	}
 
 	@PostMapping // assim como getmaping se ouver apenas um as requisicoes post serao mapeadas
 					// automaticamentes para ele
