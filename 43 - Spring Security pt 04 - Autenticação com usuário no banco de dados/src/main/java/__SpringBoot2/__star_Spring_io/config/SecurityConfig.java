@@ -1,8 +1,11 @@
 package __SpringBoot2.__star_Spring_io.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import __SpringBoot2.__star_Spring_io.services.DevDojoUserDetailsServices;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration // Indica que esta classe contém definições de Beans e configurações do Spring
@@ -23,7 +28,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 /*anotaçao depreciada */
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableMethodSecurity //prePostEnabled = true. Na @EnableMethodSecurity, isso já é o comportamento padrão.
+
+@RequiredArgsConstructor
 public class SecurityConfig {
+	// Injeção do serviço que busca usuários no banco de dados (JPA)
+	private final DevDojoUserDetailsServices devDojoUserDetailsServices;
 
     /**
      * Este Bean configura a "corrente de filtros" de segurança. 
@@ -79,6 +88,38 @@ public class SecurityConfig {
         // Retorna o gerenciador de usuários em memória contendo os dois perfis criados
         return new InMemoryUserDetailsManager(user1, user2);
     }
+    
+    /**
+     * O AuthenticationManager é o "Maestro" da autenticação.
+     * Aqui configuramos ele para aceitar múltiplas fontes (Banco e Memória).
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, InMemoryUserDetailsManager memManager) throws Exception {
+    	
+    	// Obtém o construtor de gerenciamento de autenticação do contexto do Spring
+    	AuthenticationManagerBuilder authBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        
+    	// CONFIGURAÇÃO 1: Diz ao Spring para usar o seu Service customizado (Banco de Dados)
+        // Ele usará o repositório para buscar o usuário e o passwordEncoder para validar a senha
+        authBuilder.userDetailsService(devDojoUserDetailsServices)
+                   .passwordEncoder(passwordEncoder);
+        
+        // CONFIGURAÇÃO 2: Adiciona também o gerenciador de memória que criamos acima
+        // Isso permite que o login funcione tanto para quem está no DB quanto para o 'icaro' da memória
+        authBuilder.userDetailsService(memManager)
+                   .passwordEncoder(passwordEncoder);
+
+        return authBuilder.build();
+    }
+    /**
+     * Bean responsável por definir o algoritmo de criptografia de senhas.
+     * O DelegatingPasswordEncoder decide o hash (BCrypt, Argon2, etc) baseado no prefixo da senha.
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+    
 }
 	// abaixo temos a implementaçao da aula que se tornol obsoleta nas versao 3.x do spring
 
@@ -144,4 +185,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder.encode("academy"))
 
                 .roles("USER"); 
+                
+       auth.userDetailsServices(devDojoUserDetailsServices))
+       		.passwordEncoder(passwordEncoder);
+       
  */
