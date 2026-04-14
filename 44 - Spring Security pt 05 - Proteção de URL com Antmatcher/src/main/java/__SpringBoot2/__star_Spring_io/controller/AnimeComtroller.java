@@ -84,9 +84,9 @@ public class AnimeComtroller {
 		 														*/
 	}
 
-	@PostMapping // assim como getmaping se ouver apenas um as requisicoes post serao mapeadas
+	@PostMapping("/adm") // assim como getmaping se ouver apenas um as requisicoes post serao mapeadas
 					// automaticamentes para ele
-	@PreAuthorize("hasRole('ADMIN')")
+	//@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody,
 										@AuthenticationPrincipal UserDetails userDetails) {
 		
@@ -99,12 +99,12 @@ public class AnimeComtroller {
 		return new ResponseEntity<>(animeSalvo, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/adm/{id}")
 	public ResponseEntity<Anime> delete(@PathVariable Long id ){
 		return ResponseEntity.ok(animeServices.deleteById(id));		
 	}
 	
-	@PutMapping
+	@PutMapping("/adm")
 	public ResponseEntity<Anime> update(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
 		return ResponseEntity.ok(animeServices.updateForName(animePostRequestBody));
 	}

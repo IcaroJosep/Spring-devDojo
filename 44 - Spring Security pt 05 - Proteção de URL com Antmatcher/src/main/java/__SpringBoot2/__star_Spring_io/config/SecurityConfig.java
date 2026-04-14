@@ -46,6 +46,11 @@ public class SecurityConfig {
             
             // Inicia a configuração das regras de autorização das requisições HTTP
             .authorizeHttpRequests(auth -> auth
+            		
+            	.requestMatchers("/animes/adm/**").hasRole("ADMIN")
+            	
+            	.requestMatchers("/animes/**").hasRole("USER")
+            	
                 // Define que QUALQUER requisição (.anyRequest()) 
                 // precisa estar autenticada (.authenticated()) para ser respondida
                 .anyRequest().authenticated()
