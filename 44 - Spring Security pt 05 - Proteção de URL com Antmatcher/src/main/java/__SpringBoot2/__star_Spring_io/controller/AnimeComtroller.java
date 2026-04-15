@@ -98,7 +98,7 @@ public class AnimeComtroller {
 		Anime animeSalvo = animeServices.save(animePostRequestBody);
 		return new ResponseEntity<>(animeSalvo, HttpStatus.CREATED);
 	}
-	
+	//a adiçao de /adm serve para a verifucaçao de altorizaçao centralisada contida em SecuretyConfig
 	@DeleteMapping("/adm/{id}")
 	public ResponseEntity<Anime> delete(@PathVariable Long id ){
 		return ResponseEntity.ok(animeServices.deleteById(id));		

@@ -47,8 +47,10 @@ public class SecurityConfig {
             // Inicia a configuração das regras de autorização das requisições HTTP
             .authorizeHttpRequests(auth -> auth
             		
+            	//atençao a ordem oq é mais restritivo deve vir antes
+            	//restriçao de autorizaçao aplicada a todo que esta dentro da pasta adm
             	.requestMatchers("/animes/adm/**").hasRole("ADMIN")
-            	
+            	//restriçao de autorizaçao aplicada a todo que esta dentro da pasta animes
             	.requestMatchers("/animes/**").hasRole("USER")
             	
                 // Define que QUALQUER requisição (.anyRequest()) 
