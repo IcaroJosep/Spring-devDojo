@@ -3,6 +3,8 @@ package __SpringBoot2.__star_Spring_io.controller;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springdoc.core.annotations.ParameterObject;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ import __SpringBoot2.__star_Spring_io.repository.AnimeRepository;
 import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
 import __SpringBoot2.__star_Spring_io.services.AnimeServices;
 import __SpringBoot2.__star_Spring_io.util.DateUtil;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -48,8 +51,19 @@ public class AnimeComtroller {
 
 	@GetMapping // altteraçao em .proprieties na parte de queries SQL geradas pelo Hibernate
 				// (final do arqquivo).
-	public ResponseEntity<Page<Anime>> list(Pageable pageable) {
-
+	/*
+	   ABORDAGEM ANTERIOR (Manual):PARA EXIBIÇAO NO SWAGGER"NAO TEN ALTERAÇAO NO FUNCIONAMENTO DO SISTEMA"!!!!!!!!!!!!!!!!!
+	   @PageableAsQueryParam -> Desenha os campos na UI.
+	   @Parameter(hidden = true) -> Evita que o objeto bruto apareça duplicado.
+	
+	@PageableAsQueryParam	//Adiciona os campos amigáveis (page, size, sort) na interface do Swagger
+	public ResponseEntity<Page<Anime>> list(@Parameter(hidden = true)//Esconde o objeto Pageable bruto para evitar duplicidade e poluição visual na doc
+											Pageable pageable) {									
+	*/	
+	public ResponseEntity<Page<Anime>> list(@ParameterObject// ABORDAGEM MODERNA (Automática): PARA EXIBIÇAO NO SWAGGER"NAO TEN ALTERAÇAO NO FUNCIONAMENTO DO SISTEMA"!!!!!!
+												            // 'Abre' o objeto e expõe seus campos como parâmetros de busca.
+												            // É genérico: funciona para Pageable ou qualquer DTO de filtro.			
+											Pageable pageable) {
 		log.info(dateUtil.formatLocalDataTimeToDatabaseStyle(LocalDateTime.now()));
 		Page<Anime> listAnime = animeServices.listAll(pageable);
 
@@ -58,8 +72,10 @@ public class AnimeComtroller {
 
 	@GetMapping(path = "findByName")
 	public ResponseEntity<Page<Anime>> findByName(
+			@Parameter(hidden = true)
 			Pageable pageable,
 			@RequestParam @NotBlank(message = "Nome não pode ser vazio")
+			@Parameter(description = "Nome de 1 a 50 caracteres")//add descriçao para o swagger
 			@Size(min = 1, max = 50, message = "Nome deve ter entre 1 e 50 caracteres") 
 			@Pattern(regexp = "^[a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\\s\\-._]*$", message = "Caracteres inválidos no nome") 
 			String name,
