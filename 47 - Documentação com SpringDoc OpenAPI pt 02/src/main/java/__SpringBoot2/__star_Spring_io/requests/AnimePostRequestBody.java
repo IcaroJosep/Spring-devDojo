@@ -1,5 +1,6 @@
 package __SpringBoot2.__star_Spring_io.requests;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,6 +20,7 @@ public class AnimePostRequestBody {
 			
 	@NotEmpty(message = "o nome de um anime nao pode ser vazio")
 	@Size(min = 1, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
+	@Schema(description = "este é o nome do anime",example = "demon slayer")
 	private String name;
 
 }

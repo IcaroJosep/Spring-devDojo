@@ -29,7 +29,11 @@ import __SpringBoot2.__star_Spring_io.repository.AnimeRepository;
 import __SpringBoot2.__star_Spring_io.requests.AnimePostRequestBody;
 import __SpringBoot2.__star_Spring_io.services.AnimeServices;
 import __SpringBoot2.__star_Spring_io.util.DateUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -59,7 +63,9 @@ public class AnimeComtroller {
 	@PageableAsQueryParam	//Adiciona os campos amigáveis (page, size, sort) na interface do Swagger
 	public ResponseEntity<Page<Anime>> list(@Parameter(hidden = true)//Esconde o objeto Pageable bruto para evitar duplicidade e poluição visual na doc
 											Pageable pageable) {									
-	*/	
+	*/
+	@Operation(summary = "lista todos os animes de forma paginada",description = "podendo-se definir \"size\" com max50-min5  ")
+	@Tag(name = "livre")
 	public ResponseEntity<Page<Anime>> list(@ParameterObject// ABORDAGEM MODERNA (Automática): PARA EXIBIÇAO NO SWAGGER"NAO TEN ALTERAÇAO NO FUNCIONAMENTO DO SISTEMA"!!!!!!
 												            // 'Abre' o objeto e expõe seus campos como parâmetros de busca.
 												            // É genérico: funciona para Pageable ou qualquer DTO de filtro.			
@@ -71,6 +77,8 @@ public class AnimeComtroller {
 	}
 
 	@GetMapping(path = "findByName")
+	@Operation(summary = "busca anime por nome",description = "de foma paginada por animes que \"contem\" ou \"especifico\", com 1 a 50 caracteres")
+	@Tag(name = "livre")
 	public ResponseEntity<Page<Anime>> findByName(
 			@Parameter(hidden = true)
 			Pageable pageable,
@@ -89,6 +97,7 @@ public class AnimeComtroller {
 	}
 	
 	@GetMapping(path = "by-id/{id}")
+	@Tag(name = "livre")
 	public ResponseEntity<Optional<Anime>> findByid(@PathVariable long id,
 													//captura de altencicaçao recebida e atribuiçao a de valor
 													@AuthenticationPrincipal UserDetails userDetails ){
@@ -103,6 +112,7 @@ public class AnimeComtroller {
 	@PostMapping("/adm") // assim como getmaping se ouver apenas um as requisicoes post serao mapeadas
 					// automaticamentes para ele
 	//@PreAuthorize("hasRole('ADMIN')")
+	@Tag(name = "Admin")
 	public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody,
 										@AuthenticationPrincipal UserDetails userDetails) {
 		
@@ -116,11 +126,17 @@ public class AnimeComtroller {
 	}
 	//a adiçao de /adm serve para a verifucaçao de altorizaçao centralisada contida em SecuretyConfig
 	@DeleteMapping("/adm/{id}")
+	@Tag(name = "Admin")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "id encontrado e deleteado"),
+		@ApiResponse(responseCode = "400 Bad Request", description = "id nao encontrado")		
+	})
 	public ResponseEntity<Anime> delete(@PathVariable Long id ){
 		return ResponseEntity.ok(animeServices.deleteById(id));		
 	}
 	
 	@PutMapping("/adm")
+	@Tag(name = "Admin")
 	public ResponseEntity<Anime> update(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
 		return ResponseEntity.ok(animeServices.updateForName(animePostRequestBody));
 	}
