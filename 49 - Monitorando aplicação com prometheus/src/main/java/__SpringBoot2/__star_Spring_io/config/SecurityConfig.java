@@ -46,6 +46,8 @@ public class SecurityConfig {
             
             // Inicia a configuração das regras de autorização das requisições HTTP
             .authorizeHttpRequests(auth -> auth
+            	// 1. Libera o Actuator para o Prometheus conseguir ler as métricas
+                .requestMatchers("/actuator/**").permitAll()
             		
             	//atençao a ordem oq é mais restritivo deve vir antes
             	//restriçao de autorizaçao aplicada a todo que esta dentro da pasta adm
